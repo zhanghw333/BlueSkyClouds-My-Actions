@@ -87,15 +87,6 @@ cf.fit(X=X_train, T=variant_train, Y=y_train)
 
 
 
-to_pred=cf.effect(X_processed)
 
-lift_values = to_pred[:, :-1] - to_pred[:, 0:]  # D/B/C vs A的提升值
-#计算ATE
-#？算每列的平均值？
-ate=to_pred.mean()
-#为每个用户推荐最佳弹窗
-best_strategy = np.argmax(lift_values, axis=1)
-strategy_names = ['A', 'B', 'C', 'D']
-df['recommended_popup'] = strategy_names[best_strategy]
 
 
