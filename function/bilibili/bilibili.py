@@ -64,7 +64,7 @@ preprocessor = make_column_transformer(
 X_processed = preprocessor.fit_transform(X)
 
 X_train, X_test, y_train, y_test, variant_train, variant_test = train_test_split(
-    X_processed, y, variant_multi, test_size=0.2, random_state=42)
+    X_processed, y, variant, test_size=0.2, random_state=42)
 
 
 from econml.dml import CausalForestDML
