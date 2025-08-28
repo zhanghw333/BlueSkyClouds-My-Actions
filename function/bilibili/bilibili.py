@@ -82,7 +82,7 @@ cf = CausalForestDML(
     min_samples_split=20
 )
 
-cf.fit(X_train, variant_train, y_train)
+cf.fit(X=X_train, T=variant_train, Y=y_train)
 
 
 
