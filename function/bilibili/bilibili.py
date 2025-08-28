@@ -84,7 +84,7 @@ cf = CausalForestDML(
 
 cf.fit(X=X_train, T=variant_train, Y=y_train)
 
-to_pred=cf.effect(X_processed)
+to_pred=cf.predict(X_processed)
 print(f"::notice::模型准确率为: {to_pred}") 
 
 
