@@ -84,7 +84,8 @@ cf = CausalForestDML(
 
 cf.fit(X=X_train, T=variant_train, Y=y_train)
 
-
+to_pred=cf.effect(X_processed)
+print(f"to_pred={to_pred}") >>$GITHUB_OUTPUT
 
 
 
