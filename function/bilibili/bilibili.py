@@ -84,8 +84,18 @@ cf = CausalForestDML(
 
 cf.fit(X=X_train, T=variant_train, Y=y_train)
 
-to_pred=cf.predict(X_processed)
-print(f"::notice::模型准确率为: {to_pred}") 
+ate_results = []
+for i in range(1, 4):  # 对比每个实验组 vs 对照组
+    ate = cf.ate_(T0=0, T1=i)  # T0=对照组, T1=实验组
+    ate_results.append({
+        'treatment': i,
+        'treatment_name': f'弹窗{i}',
+        'ate': ate,
+        'ate_interpretation': f'相比对照组，弹窗{i}平均带来{ate:.3%}的转化率提升'
+    })
+
+ate_df = pd.DataFrame(ate_results)
+print(ate_df)
 
 
 
