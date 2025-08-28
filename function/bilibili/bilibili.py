@@ -11,6 +11,7 @@ import numpy as np
 from sklearn.preprocessing import OneHotEncoder, StandardScaler
 from sklearn.compose import make_column_transformer
 from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestClassifier
 
 a=pd.read_csv('55.csv')
 b=pd.read_csv('66.csv')
