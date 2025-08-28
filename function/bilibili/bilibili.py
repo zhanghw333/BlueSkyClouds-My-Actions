@@ -36,7 +36,7 @@ cf = CausalForestDML(
     min_samples_leaf=10,  # 叶节点最小样本数
     min_samples_split=20
 )
-
+df=pd.read_csv('33.csv')
 
 
 
