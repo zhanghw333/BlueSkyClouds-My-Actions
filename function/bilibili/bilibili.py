@@ -84,9 +84,9 @@ cf = CausalForestDML(
 
 cf.fit(X=X_train, T=variant_train, Y=y_train)
 
-effect_matrix = cf.effect(X_processed, variant0=0)
+effect_matrix = cf.effect(X_test, variant_test)
 
-print(effect_matrix[:5])
+print(effect_matrix)
 
 
 
