@@ -107,31 +107,13 @@ results_df = pd.DataFrame({
 })
 
 # 查看前几行示例
-print(results_df.head())
+continuous_columns = continuous_features
 
-from sklearn.tree import DecisionTreeClassifier, plot_tree
-import matplotlib.pyplot as plt
+# 2. 离散特征的列名由 OneHotEncoder 生成
+#    注意：必须先 fit 才能获取真实的类别信息！
+preprocessor.fit(X)  # 如果尚未 fit，需先执行这一步
+discrete_columns = preprocessor.named_transformers_['onehotencoder'].get_feature_names_out(input_features=discrete_features)
 
-# 特征矩阵 + 推荐的处理作为标签
-X = X_test  # 特征矩阵 (n_samples × n_features)
-y = recommended_popup  # 目标标签 (n_samples,)
-
-# 训练决策树（控制深度防止过拟合）
-dt = DecisionTreeClassifier(
-    max_depth=3,          # 根据业务需求调整深度
-    min_samples_leaf=100, # 叶节点最小样本数
-    random_state=42
-)
-dt.fit(X, y)
-plot_tree(
-    dt,
-    feature_names=list(X.columns),  # 替换为你的特征名
-    class_names=[1, 2, 3],           # 处理编号
-    filled=True,                    # 填充颜色表示纯度
-    rounded=True,                   # 圆角矩形
-    fontsize=12                    # 字体大小
-)
-plt.savefig("icon/decision_tree_rules.png")  # 保存图片
-plt.show()
-
+# 3. 合并所有列名（顺序与 transform 时一致）
+all_columns = np.concatenate([continuous_columns, discrete_columns])
 
