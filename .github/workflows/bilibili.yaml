@@ -25,5 +25,15 @@ jobs:
 
             - name: "运行 哔哩哔哩签到"
               run: python3 function/bilibili/bilibili.py
+
+
+            - name: Upload visualization results
+              uses: actions/upload-artifact@v3
+              with:
+                  name: visualization-results
+                  path: |
+                    results/
+                    *.png
+                    *.html
               
 #最后推送 2021年4月22日
