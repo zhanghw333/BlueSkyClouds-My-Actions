@@ -91,12 +91,12 @@ to_pr= cf.effect(X=X_test,T0=0,T1=3)
 
 import matplotlib.pyplot as plt
 plt.figure(figsize=(12, 5))
-plt.hist(to_pre, bins=50, alpha=0.7, color='blue', edgecolor='black')
-plt.axvline(to_pre.mean(), color='red', linestyle='--', label=f'Mean Effect: {to_pre.mean():.2f}')
+plt.hist(to_pr, bins=50, alpha=0.7, color='blue', edgecolor='black')
+plt.axvline(to_pr.mean(), color='red', linestyle='--', label=f'Mean Effect: {to_pr.mean():.2f}')
 plt.xlabel('Treatment Effect')
 plt.ylabel('Frequency')
-plt.title('Individual Treatment Effect (ITE) Distribution2')
-plt.savefig("icon/Individual Treatment Effect (ITE) Distribution2.png")
+plt.title('Individual Treatment Effect (ITE) Distribution3')
+plt.savefig("icon/Individual Treatment Effect (ITE) Distribution3.png")
 plt.show()
 
 
