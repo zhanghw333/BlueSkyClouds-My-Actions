@@ -1,3 +1,4 @@
 requests
 econml
+matplotlib
 python-dateutil
