@@ -89,9 +89,9 @@ to_pred= cf.effect(X=X_test,T0=0,T1=1)
 to_pre= cf.effect(X=X_test,T0=0,T1=2)
 to_pr= cf.effect(X=X_test,T0=0,T1=3)
 
-print(f"::notice::对照组和实验组1差别为: {to_pred.mean():.2f}") 
-print(f"::notice::对照组和实验组2差别为: {to_pre.mean():.2f}") 
-print(f"::notice::对照组和实验组3差别为: {to_pr.mean():.2f}") 
+print(f"::notice::对照组和实验组1差别为: {to_pred.mean():.8f}") 
+print(f"::notice::对照组和实验组2差别为: {to_pre.mean():.8f}") 
+print(f"::notice::对照组和实验组3差别为: {to_pr.mean():.8f}") 
 
 
 
