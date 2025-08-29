@@ -89,16 +89,49 @@ to_pred= cf.effect(X=X_test,T0=0,T1=1)
 to_pre= cf.effect(X=X_test,T0=0,T1=2)
 to_pr= cf.effect(X=X_test,T0=0,T1=3)
 
+treatment_effects = np.column_stack([to_pred, to_pre, to_pr])  # shape=(n_samples, 3)
+
+# Step 2: 对每个用户选择最优处理（取最大效应对应的处理编号）
+# argmax返回的是列索引（0→T1=1, 1→T1=2, 2→T1=3）
+optimal_treatment_idx = np.argmax(treatment_effects, axis=1)  # shape=(n_samples,)
+
+# Step 3: 转换为原始处理编号（从1开始）
+recommended_popup = optimal_treatment_idx + 1  # 现在值为1/2/3
+
+# Step 4: 创建包含推荐结果的DataFrame（方便业务集成）
+results_df = pd.DataFrame({
+    'user_id': range(len(X_test)),  # 替换为真实用户ID
+    'features': list(X_test),       # 可选：保存特征用于解释
+    'recommended_popup': recommended_popup,
+    'effect_value': np.max(treatment_effects, axis=1)  # 最大效应值
+})
+
+# 查看前几行示例
+print(results_df.head())
+
+from sklearn.tree import DecisionTreeClassifier, plot_tree
 import matplotlib.pyplot as plt
-plt.figure(figsize=(12, 5))
-plt.hist(to_pr, bins=50, alpha=0.7, color='blue', edgecolor='black')
-plt.axvline(to_pr.mean(), color='red', linestyle='--', label=f'Mean Effect: {to_pr.mean():.2f}')
-plt.xlabel('Treatment Effect')
-plt.ylabel('Frequency')
-plt.title('Individual Treatment Effect (ITE) Distribution3')
-plt.savefig("icon/Individual Treatment Effect (ITE) Distribution3.png")
+
+# 特征矩阵 + 推荐的处理作为标签
+X = X_test  # 特征矩阵 (n_samples × n_features)
+y = recommended_popup  # 目标标签 (n_samples,)
+
+# 训练决策树（控制深度防止过拟合）
+dt = DecisionTreeClassifier(
+    max_depth=3,          # 根据业务需求调整深度
+    min_samples_leaf=100, # 叶节点最小样本数
+    random_state=42
+)
+dt.fit(X, y)
+plot_tree(
+    dt,
+    feature_names=list(X.columns),  # 替换为你的特征名
+    class_names=[1, 2, 3],           # 处理编号
+    filled=True,                    # 填充颜色表示纯度
+    rounded=True,                   # 圆角矩形
+    fontsize=12                    # 字体大小
+)
+plt.savefig("icon/decision_tree_rules.png")  # 保存图片
 plt.show()
-
-
 
 
