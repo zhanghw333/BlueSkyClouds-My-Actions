@@ -28,7 +28,7 @@ jobs:
 
 
             - name: Upload visualization results
-               uses: actions/upload-artifact@v4 
+              uses: actions/upload-artifact@v4 
               with:
                   name: visualization-results
                   path: |
