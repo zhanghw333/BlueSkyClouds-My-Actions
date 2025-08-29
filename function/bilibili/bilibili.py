@@ -89,14 +89,9 @@ to_pred= cf.effect(X=X_test,T0=0,T1=1)
 to_pre= cf.effect(X=X_test,T0=0,T1=2)
 to_pr= cf.effect(X=X_test,T0=0,T1=3)
 
-import matplotlib.pyplot as plt
-plt.figure(figsize=(12, 5))
-plt.hist(to_pred, bins=50, alpha=0.7, color='blue', edgecolor='black')
-plt.axvline(to_pred.mean(), color='red', linestyle='--', label=f'Mean Effect: {to_pred.mean():.2f}')
-plt.xlabel('Treatment Effect')
-plt.ylabel('Frequency')
-plt.title('Individual Treatment Effect (ITE) Distribution')
-plt.savefig('效应.png')
+print(f"::notice::对照组和实验组1差别为: {to_pred.mean():.2f}") 
+print(f"::notice::对照组和实验组2差别为: {to_pre.mean():.2f}") 
+print(f"::notice::对照组和实验组3差别为: {to_pr.mean():.2f}") 
 
 
 
