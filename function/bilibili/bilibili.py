@@ -84,11 +84,13 @@ cf = CausalForestDML(
 
 cf.fit(X=X_train, T=variant_train, Y=y_train)
 
-to_pred= cf.effect(X=X_test,T0=0,T1=2)
+to_pred= cf.effect(X=X_test,T0=0,T1=1)
 
-print(f"::notice::模型准确率为: {to_pred}") 
-
-
+to_pre= cf.effect(X=X_test,T0=0,T1=2)
+to_pr= cf.effect(X=X_test,T0=0,T1=3)
+print(f"::notice::对照组和实验组1差别为: {to_pred}") 
+print(f"::notice::对照组和实验组2差别为: {to_pre}") 
+print(f"::notice::对照组和实验组3差别为: {to_pr}") 
 
 
 
