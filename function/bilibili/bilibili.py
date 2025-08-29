@@ -97,9 +97,7 @@ plt.xlabel('Treatment Effect')
 plt.ylabel('Frequency')
 plt.title('Individual Treatment Effect (ITE) Distribution')
 
-plt.savefig('artifacts/ate_plot.png', dpi=150, bbox_inches='tight')
-plt.close()
-
+plt.show()
 
 
 
