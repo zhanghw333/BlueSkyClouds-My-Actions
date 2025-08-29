@@ -31,7 +31,7 @@ jobs:
               uses: actions/upload-artifact@v4 
               with:
                   name: visualization-results
-                  path: ./artifacts/  
+                  path: src/artifacts/
                     
               
 #最后推送 2021年4月22日
