@@ -96,7 +96,7 @@ plt.axvline(to_pred.mean(), color='red', linestyle='--', label=f'Mean Effect: {t
 plt.xlabel('Treatment Effect')
 plt.ylabel('Frequency')
 plt.title('Individual Treatment Effect (ITE) Distribution')
-plt.savefig("./artifacts/Individual Treatment Effect (ITE) Distribution.png")
+plt.savefig("artifacts/Individual Treatment Effect (ITE) Distribution.png")
 plt.show()
 
 
