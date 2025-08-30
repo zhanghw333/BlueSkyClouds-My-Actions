@@ -123,7 +123,7 @@ import matplotlib.pyplot as plt
 # 特征矩阵 + 推荐的处理作为标签
 X = X_test  # 特征矩阵 (n_samples × n_features)
 y = recommended_popup  # 目标标签 (n_samples,)
-
+columns_list = all_columns.tolist()
 # 训练决策树（控制深度防止过拟合）
 dt = DecisionTreeClassifier(
     max_depth=3,          # 根据业务需求调整深度
@@ -133,7 +133,7 @@ dt = DecisionTreeClassifier(
 dt.fit(X, y)
 plot_tree(
     dt,
-    feature_names=all_columns,  # 替换为你的特征名
+    feature_names=columns_list,  # 替换为你的特征名
     class_names=[1, 2, 3],           # 处理编号
     filled=True,                    # 填充颜色表示纯度
     rounded=True,                   # 圆角矩形
