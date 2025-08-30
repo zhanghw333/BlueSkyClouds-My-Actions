@@ -133,7 +133,7 @@ dt = DecisionTreeClassifier(
 dt.fit(X, y)
 plot_tree(
     dt,
-    feature_names=all_columns.tolist(),  # 替换为你的特征名
+    feature_names=None,  # 替换为你的特征名
     class_names=[1, 2, 3],           # 处理编号
     filled=True,                    # 填充颜色表示纯度
     rounded=True,                   # 圆角矩形
