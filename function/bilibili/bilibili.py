@@ -117,3 +117,27 @@ discrete_columns = preprocessor.named_transformers_['onehotencoder'].get_feature
 # 3. 合并所有列名（顺序与 transform 时一致）
 all_columns = np.concatenate([continuous_columns, discrete_columns])
 
+from sklearn.tree import DecisionTreeClassifier, plot_tree
+import matplotlib.pyplot as plt
+
+# 特征矩阵 + 推荐的处理作为标签
+X = X_test  # 特征矩阵 (n_samples × n_features)
+y = recommended_popup  # 目标标签 (n_samples,)
+
+# 训练决策树（控制深度防止过拟合）
+dt = DecisionTreeClassifier(
+    max_depth=3,          # 根据业务需求调整深度
+    min_samples_leaf=100, # 叶节点最小样本数
+    random_state=42
+)
+dt.fit(X, y)
+plot_tree(
+    dt,
+    feature_names=all_columns,  # 替换为你的特征名
+    class_names=[1, 2, 3],           # 处理编号
+    filled=True,                    # 填充颜色表示纯度
+    rounded=True,                   # 圆角矩形
+    fontsize=12                    # 字体大小
+)
+plt.savefig("icon/decision_tree_rules.png")  # 保存图片
+plt.show()
