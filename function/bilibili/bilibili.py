@@ -131,13 +131,3 @@ dt = DecisionTreeClassifier(
     random_state=42
 )
 dt.fit(X, y)
-plot_tree(
-    dt,
-    feature_names=columns_list,  # 替换为你的特征名
-    class_names=[1, 2, 3],           # 处理编号
-    filled=True,                    # 填充颜色表示纯度
-    rounded=True,                   # 圆角矩形
-    fontsize=12                    # 字体大小
-)
-plt.savefig("icon/decision_tree_rules.png")  # 保存图片
-plt.show()
