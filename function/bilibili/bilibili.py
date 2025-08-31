@@ -121,23 +121,33 @@ from sklearn.tree import DecisionTreeClassifier, plot_tree
 import matplotlib.pyplot as plt
 
 # 特征矩阵 + 推荐的处理作为标签
-X = X_test  # 特征矩阵 (n_samples × n_features)
+#X = X_test  # 特征矩阵 (n_samples × n_features)
 y = recommended_popup  # 目标标签 (n_samples,)
 columns_list = all_columns.tolist()
+
+feature_importance = np.abs(np.random.rand(X.shape[1]))  # 模拟特征重要性
+top_features = np.argsort(feature_importance)[::-1][:5]
+
+x_important = X.iloc[:, top_features]
+x_train, x_test, y_train, y_test = train_test_split(x_important, y
+, test_size=0.2)
+
 # 训练决策树（控制深度防止过拟合）
 dt = DecisionTreeClassifier(
     max_depth=3,          # 根据业务需求调整深度
     min_samples_leaf=100, # 叶节点最小样本数
     random_state=42
 )
-dt.fit(X, y)
+#dt.fit(X, y)
+dt.fit(x_train, y_train)
 plot_tree(
     dt,
     feature_names=all_columns.tolist(),  # 替换为你的特征名
-              # 处理编号
+    class_names=['A','B','C','D'],         # 处理编号
     filled=True,                    # 填充颜色表示纯度
     rounded=True,                   # 圆角矩形
     fontsize=12                    # 字体大小
 )
+plt.figure(figsize=(50,40))
 plt.savefig("icon/decision_tree_rules.png")  # 保存图片
 plt.show()
