@@ -125,11 +125,11 @@ X = X_test  # 特征矩阵 (n_samples × n_features)
 y = recommended_popup  # 目标标签 (n_samples,)
 columns_list = all_columns.tolist()
 
-feature_importance = np.abs(np.random.rand(X.shape[1]))  # 模拟特征重要性
-top_features = np.argsort(feature_importance)[::-1][:3]
+#feature_importance = np.abs(np.random.rand(X.shape[1]))  # 模拟特征重要性
+#top_features = np.argsort(feature_importance)[::-1][:3]
 
-x_important = X[:, top_features]
-x_train, x_test, y_train, y_test = train_test_split(x_important, y
+#x_important = X[:, top_features]
+#x_train, x_test, y_train, y_test = train_test_split(x_important, y
 , test_size=0.2)
 
 # 训练决策树（控制深度防止过拟合）
@@ -138,13 +138,13 @@ dt = DecisionTreeClassifier(
     min_samples_leaf=100, # 叶节点最小样本数
     random_state=42
 )
-#dt.fit(X, y)
-dt.fit(x_train, y_train)
+dt.fit(X, y)
+#dt.fit(x_train, y_train)
 plt.figure(figsize=(50,40))
 plot_tree(
     dt,
     feature_names=all_columns.tolist(),  # 替换为你的特征名
-    class_names=['A','B','C','D'],         # 处理编号
+    class_names=['A','B','C'],         # 处理编号
     filled=True,                    # 填充颜色表示纯度
     rounded=True,                   # 圆角矩形
     fontsize=12                    # 字体大小
