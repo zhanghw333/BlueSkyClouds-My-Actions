@@ -121,14 +121,14 @@ from sklearn.tree import DecisionTreeClassifier, plot_tree
 import matplotlib.pyplot as plt
 
 # 特征矩阵 + 推荐的处理作为标签
-#X = X_test  # 特征矩阵 (n_samples × n_features)
+X = X_test  # 特征矩阵 (n_samples × n_features)
 y = recommended_popup  # 目标标签 (n_samples,)
 columns_list = all_columns.tolist()
 
 feature_importance = np.abs(np.random.rand(X.shape[1]))  # 模拟特征重要性
 top_features = np.argsort(feature_importance)[::-1][:5]
 
-x_important = X.iloc[:, top_features]
+x_important = X[:, top_features]
 x_train, x_test, y_train, y_test = train_test_split(x_important, y
 , test_size=0.2)
 
