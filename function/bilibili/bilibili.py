@@ -126,7 +126,7 @@ y = recommended_popup  # 目标标签 (n_samples,)
 columns_list = all_columns.tolist()
 
 feature_importance = np.abs(np.random.rand(X.shape[1]))  # 模拟特征重要性
-top_features = np.argsort(feature_importance)[::-1][:5]
+top_features = np.argsort(feature_importance)[::-1][:3]
 
 x_important = X[:, top_features]
 x_train, x_test, y_train, y_test = train_test_split(x_important, y
