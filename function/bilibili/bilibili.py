@@ -143,7 +143,7 @@ plt.figure(figsize=(40,30))
 plot_tree(
     dt,
     feature_names=all_columns.tolist(),  # 替换为你的特征名
-    class_names=['A','B','C'],         # 处理编号
+    class_names=['A','B'],         # 处理编号
     filled=True,                    # 填充颜色表示纯度
     rounded=True,                   # 圆角矩形
     fontsize=12                    # 字体大小
