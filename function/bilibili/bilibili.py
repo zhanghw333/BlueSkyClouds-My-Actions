@@ -87,8 +87,70 @@ to_pred= cf.effect(X=X_test,T0=0,T1=1)
 
 to_pre= cf.effect(X=X_test,T0=0,T1=2)
 
-print(f"::notice::对照组和实验组1差别为: {to_pred.mean():.8f}")
-print(f"::notice::对照组和实验组2差别为: {to_pre.mean():.8f}")
+treatment_effects = np.column_stack([to_pred, to_pre])  # shape=(n_samples, 3)
+
+
+# Step 2: 对每个用户选择最优处理（取最大效应对应的处理编号）
+# argmax返回的是列索引（0→T1=1, 1→T1=2, 2→T1=3）
+optimal_treatment_idx = np.argmax(treatment_effects, axis=1)  # shape=(n_samples,)
+
+# Step 3: 转换为原始处理编号（从1开始）
+recommended_popup = optimal_treatment_idx + 1  # 现在值为1/2/3
+
+# Step 4: 创建包含推荐结果的DataFrame（方便业务集成）
+results_df = pd.DataFrame({
+    'user_id': range(len(X_test)),  # 替换为真实用户ID
+    'features': list(X_test),       # 可选：保存特征用于解释
+    'recommended_popup': recommended_popup,
+    'effect_value': np.max(treatment_effects, axis=1)  # 最大效应值
+})
+
+# 查看前几行示例
+continuous_columns = continuous_features
+
+# 2. 离散特征的列名由 OneHotEncoder 生成
+#    注意：必须先 fit 才能获取真实的类别信息！
+preprocessor.fit(X)  # 如果尚未 fit，需先执行这一步
+discrete_columns = preprocessor.named_transformers_['onehotencoder'].get_feature_names_out(input_features=discrete_features)
+
+# 3. 合并所有列名（顺序与 transform 时一致）
+all_columns = np.concatenate([continuous_columns, discrete_columns])
+
+from sklearn.tree import DecisionTreeClassifier, plot_tree
+import matplotlib.pyplot as plt
+
+# 特征矩阵 + 推荐的处理作为标签
+X = X_test  # 特征矩阵 (n_samples × n_features)
+y = recommended_popup  # 目标标签 (n_samples,)
+columns_list = all_columns.tolist()
+
+feature_importance = np.abs(np.random.rand(X.shape[1]))  # 模拟特征重要性
+top_features = np.argsort(feature_importance)[::-1][:5]
+
+x_important = X[:, top_features]
+x_train, x_test, y_train, y_test = train_test_split(x_important, y
+, test_size=0.2)
+
+# 训练决策树（控制深度防止过拟合）
+dt = DecisionTreeClassifier(
+    max_depth=3,          # 根据业务需求调整深度
+    min_samples_leaf=100, # 叶节点最小样本数
+    random_state=42
+)
+#dt.fit(X, y)
+dt.fit(x_train, y_train)
+plt.figure(figsize=(40,30))
+plot_tree(
+    dt,
+    feature_names=all_columns.tolist(),  # 替换为你的特征名
+    class_names=['A','B'],         # 处理编号
+    filled=True,                    # 填充颜色表示纯度
+    rounded=True,                   # 圆角矩形
+    fontsize=12                    # 字体大小
+)
+
+plt.savefig("icon/decision_tree_rules.png")  # 保存图片
+plt.show()
 
 #to_pr= cf.effect(X=X_test,T0=0,T1=3)
 
